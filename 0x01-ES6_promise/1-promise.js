@@ -3,7 +3,7 @@ export default function getFullResponseFromAPI(success) {
     if (success) {
       const data = {
         status: 200,
-        body: 'Sucess',
+        body: 'Success',
       };
       resolve(data);
     } else {
