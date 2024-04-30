@@ -1,5 +1,5 @@
 export default function cleanSet(set, startString) {
-  if (!startString) {
+  if (startString === undefined || starString.length === 0) {
     return '';
   }
   const concate = [];
