@@ -4,7 +4,7 @@ export default function cleanSet(set, startString) {
   }
   const concate = [];
   for (const value of set) {
-    if (typeof value === 'string'&& value.startsWith(startString)) {
+    if (typeof value === 'string' && value.startsWith(startString)) {
       const restChar = value.slice(startString.length);
       concate.push(restChar);
     }
