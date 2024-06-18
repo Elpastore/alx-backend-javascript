@@ -1,45 +1,36 @@
 const fs = require('fs');
 
-function countStudents (filePath) {
+function countStudents (path) {
   try {
-    const data = fs.readFileSync(filePath, 'utf8');
+    const data = fs.readFileSync(path, 'utf-8');
+    const lines = data.split('\n').filter((line) => line.trim() !== '');
+    lines.shift();
+    console.log(`Number of students: ${lines.length}`);
 
-    const lines = data.split('\n').filter(line => line.trim() !== '');
-
-    if (lines.length === 0) {
-      throw new Error('Cannot load the database');
-    }
-
-    const studentsByField = {};
-
-    lines.forEach(line => {
-      const [firstName, lastName, age, field] = line.split(',').map(item => item.trim());
-
-      if (!firstName || !lastName || !age || !field) {
-        return;
-      }
-
-      if (!studentsByField[field]) {
-        studentsByField[field] = [];
-      }
-
-      studentsByField[field].push(firstName);
+    const output = [];
+    lines.forEach((line) => {
+      const fields = line.split(',');
+      output.push(fields);
     });
-
-    let totalStudents = 0;
-    for (const field in studentsByField) {
-      totalStudents += studentsByField[field].length;
+    const studentsByFields = {};
+    for (let index = 0; index < output.length; index += 1) {
+      const firstName = output[index][0];
+      const field = output[index][3];
+      if (!Object.hasOwnProperty.call(studentsByFields, field)) {
+        studentsByFields[field] = [];
+      }
+      studentsByFields[field].push(firstName);
     }
+    console.log(studentsByFields);
 
-    console.log(`Number of students: ${totalStudents}`);
-
-    for (const field in studentsByField) {
-      const count = studentsByField[field].length;
-      const studentList = studentsByField[field].join(', ');
-      console.log(`Number of students in ${field}: ${count}. List: ${studentList}`);
+    for (const key in studentsByFields) {
+      if (Object.hasOwnProperty.call(studentsByFields, key)) {
+        const value = studentsByFields[key];
+        console.log(`Number of students in ${key}: ${value.length}. List: ${value.join(', ')}`);
+      }
     }
-  } catch (error) {
-    console.error('Cannot load the database');
+  } catch (err) {
+    console.log('Cannot load the database');
   }
 }
 
