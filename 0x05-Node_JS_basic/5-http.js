@@ -11,7 +11,7 @@ function countStudents (path) {
 
       const lines = data.split('\n').filter((line) => line.trim() !== '');
       lines.shift(); // Remove header line
-      console.log(`Number of students: ${lines.length}`);
+      let ouputFile = `Number of students: ${lines.length}\n`;
 
       const output = [];
       lines.forEach((line) => {
@@ -32,11 +32,11 @@ function countStudents (path) {
       for (const key in studentsByFields) {
         if (Object.hasOwnProperty.call(studentsByFields, key)) {
           const value = studentsByFields[key];
-          console.log(`Number of students in ${key}: ${value.length}. List: ${value.join(', ')}`);
+          ouputFile += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
         }
       }
 
-      resolve(studentsByFields);
+      resolve(ouputFile);
     });
   });
 }
@@ -47,35 +47,20 @@ const port = 1245;
 const app = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    const filePath = process.argv[2]; // Assuming database path is passed as argument
-
-    countStudents(filePath)
-      .then((studentsByFields) => {
-        res.write('This is the list of our students\n');
-
-        for (const key in studentsByFields) {
-          if (Object.hasOwnProperty.call(studentsByFields, key)) {
-            const value = studentsByFields[key];
-            res.write(`Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`);
-          }
-        }
-        res.end(); // End response after all data is sent
-      })
-      .catch((error) => {
-        console.error(error);
-        res.statusCode = 404;
-        res.end('Cannot load the database');
-      });
-  } else {
-    res.statusCode = 404;
-    res.end('404 Not Found');
+    res.write('This is the list of our students');
+    const filePath = process.argv[2].toString();
+    countStudents(filePath).then((output) => {
+      const contentDB = output.slice(0, -1);
+      res.end(contentDB);
+    }).catch(() => {
+      res.statusCode = 404;
+      res.end('Cannot load the database');
+    });
   }
 });
-
 app.listen(port, host, () => {});
 
 module.exports = app;
