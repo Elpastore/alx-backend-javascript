@@ -1,7 +1,10 @@
-const http = require('http');
+const express = require('express');
 const fs = require('fs');
 
-function countStudents(path) {
+const app = express();
+const port = 1245;
+
+function countStudents (path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
@@ -11,7 +14,7 @@ function countStudents(path) {
 
       const lines = data.split('\n').filter((line) => line.trim() !== '');
       lines.shift(); // Remove header line
-      let ouputFile = `Number of students: ${lines.length}\n`;
+      let outputFile = `Number of students: ${lines.length}\n`;
 
       const output = [];
       lines.forEach((line) => {
@@ -32,35 +35,30 @@ function countStudents(path) {
       for (const key in studentsByFields) {
         if (Object.hasOwnProperty.call(studentsByFields, key)) {
           const value = studentsByFields[key];
-          ouputFile += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
+          outputFile += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
         }
       }
 
-      resolve(ouputFile);
+      resolve(outputFile);
     });
   });
 }
 
-const host = '127.0.0.1';
-const port = 1245;
-
-const app = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  if (req.url === '/') {
-    res.end('Hello Holberton School!');
-  } else if (req.url === '/students') {
-    res.write('This is the list of our students\n');
-    const filePath = process.argv[2];
-    countStudents(filePath).then((output) => {
-      const contentDB = output.slice(0, -1);
-      res.end(contentDB);
-    }).catch(() => {
-      res.statusCode = 404;
-      res.end('Cannot load the database');
-    });
-  }
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
 });
-app.listen(port, host, () => {});
 
-module.exports = app;
+app.get('/students', (req, res) => {
+  const filePath = process.argv[2];
+  countStudents(filePath)
+    .then((output) => {
+      res.send(`This is the list of our students\n${output}`);
+    })
+    .catch(() => {
+      res.status(404).send('Cannot load the database');
+    });
+});
+
+const server = app.listen(port, () => {});
+
+module.exports = server;
