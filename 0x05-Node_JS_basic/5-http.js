@@ -50,8 +50,8 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    res.write('This is the list of our students');
-    const filePath = process.argv[2].toString();
+    res.write('This is the list of our students\n');
+    const filePath = process.argv[2];
     countStudents(filePath).then((output) => {
       const contentDB = output.slice(0, -1);
       res.end(contentDB);
