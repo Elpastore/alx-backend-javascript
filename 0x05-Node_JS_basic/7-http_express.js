@@ -1,10 +1,11 @@
 const express = require('express');
+
 const fs = require('fs');
 
 const app = express();
 const port = 1245;
 
-function countStudents (path) {
+function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
@@ -13,7 +14,7 @@ function countStudents (path) {
       }
 
       const lines = data.split('\n').filter((line) => line.trim() !== '');
-      lines.shift(); // Remove header line
+      lines.shift();
       let outputFile = `Number of students: ${lines.length}\n`;
 
       const output = [];
