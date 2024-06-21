@@ -15,31 +15,29 @@ describe("Index page", function() {
     });
     it("check correct content", function(done) {
 	request(options, function(err, res, body) {
-	    expect(body).to.contain("Welcome to the payment system");
+	    expect(body).to.equal("Welcome to the payment system");
 	    done();
 	});
     });
-
 });
 
 describe("Cart page", function() {
-    it('check status code ', function(done) {
-        request('http://localhost:7865/cart', function(error, response, body) {
-            expect(response.statusCode).to.equal(200);
-            done();
-        });
+    it("check correct status code ", function(done) {
+	request.get("http://localhost:7865/cart/12", function(err, res, body) {
+	    expect(res.statusCode).to.equal(200);
+	    done();
+	});
     });
-    it('check content', function(done) {
-        request('http://localhost:7865/cart/12', function(error, response, body) {
-        expect(body).to.contain('Payment methods for cart 12');
-        done();
-        });
+    it("check correct content", function(done) {
+	request.get("http://localhost:7865/cart/12", function(err, res, body) {
+	    expect(body).to.contain("Payment methods for cart 12");
+	    done();
+	});
     });
-
-    it("check incorrect url", function(done) {
-        request.get("http//localhost:7865/cart/laye", function(error, response, body) {
-            expect(response.statusCode).to.equal(404);
-            done();
-        });
+    it("check correct for incorrect url", function(done) {
+	request.get("http://localhost:7865/cart/kim", function(err, res, body) {
+	    expect(res.statusCode).to.equal(404);
+	    done();
+	});
     });
 });
