@@ -4,7 +4,7 @@ function calculateNumber (type, a, b) {
   if (type === 'SUM') {
     return roundedA + roundedB;
   }
-  if (type === 'SUBSTRACT') {
+  if (type === 'SUBTRACT') {
     return roundedA - roundedB;
   }
   if (type === 'DIVIDE') {
