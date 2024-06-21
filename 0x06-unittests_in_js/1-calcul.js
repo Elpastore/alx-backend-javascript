@@ -1,21 +1,19 @@
-function calculateNumber (type, a, b) {
-  if (type === 'SUM') {
-    const roundedA = Math.round(a);
-    const roundedB = Math.round(b);
-    return roundedA + roundedB;
-  }
-  if (type === 'SUBTRACT') {
-    const roundedA = Math.round(a);
-    const roundedB = Math.round(b);
-    return roundedA - roundedB;
-  }
-  if (type === 'DIVIDE') {
-    if (b === 0) {
-      return 'Error';
-    }
-    const roundedA = Math.round(a);
-    const roundedB = Math.round(b);
-    return roundedA / roundedB;
+function calculateNumber(type, a, b) {
+  const roundedA = Math.round(a);
+  const roundedB = Math.round(b);
+
+  switch (type) {
+    case 'SUM':
+      return roundedA + roundedB;
+    case 'SUBTRACT':
+      return roundedA - roundedB;
+    case 'DIVIDE':
+      if (roundedB === 0) {
+        return 'Error';
+      }
+      return roundedA / roundedB;
+    default:
+      throw new Error('Invalid type');
   }
 }
 
