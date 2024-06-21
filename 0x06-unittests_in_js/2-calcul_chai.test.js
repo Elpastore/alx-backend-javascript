@@ -1,7 +1,16 @@
 const calculateNumber = require('./2-calcul_chai');
-const chai = require('chai');
-const expect = chai.expect;
+let chai;
+let expect
+
+
 describe('Test cases', function() {
+  beforeEach(async function () {
+    // Dynamically import Chai
+    chai = await import('chai');
+    expect = chai.expect;
+    
+  });  
+  
   it('Add test', function() {
     expect(calculateNumber('SUM', 1.2, 5)).to.equal(6);
   });

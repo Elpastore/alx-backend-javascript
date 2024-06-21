@@ -36,4 +36,7 @@ describe('Test case', () => {
   it('test divide', () => {
     assert.strictEqual(calculateNumber('DIVIDE', 10, 4.8), 2);
   });
+  it('test divide', () => {
+    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
+  });
 });
