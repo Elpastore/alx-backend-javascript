@@ -1,38 +1,39 @@
 const calculateNumber = require('./1-calcul');
 const assert = require('assert');
 
-describe('CalculateNumber test', function () {
-  describe('Add test case', function () {
-    it('should return 5 when type is SUM and inputs are 1.2 and 4', function () {
-      assert.strictEqual(calculateNumber('SUM', 1.2, 4), 5);
-    });
-
-    it('should return 4 when type is SUM and inputs are 1.2 and 2.4', function () {
-      assert.strictEqual(calculateNumber('SUM', 1.2, 2.4), 3);
-    });
+describe("Test case", function() {
+  it("test if 1.2 and 5 is equal to 6", function() {
+    assert.strictEqual(calculateNumber('SUM', 1.2, 5), 6);
+  });
+  it("test if 1.8 and 4.6 is equal to 7", function() {
+    assert.strictEqual(calculateNumber('SUM', 1.8, 4.6), 7);
   });
 
-  describe('SUBTRACT test case', function () {
-    it('should return 5 when type is SUBTRACT and inputs are 1.2 and -4', function () {
-      assert.strictEqual(calculateNumber('SUBTRACT', 1.2, -4), 5);
-    });
-
-    it('should return -1 when type is SUBTRACT and inputs are 1.4 and 2.6', function () {
-      assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 2.6), -2);
-    });
+  it("test if 2 and 3 is equal to 5", function() {
+    assert.strictEqual(calculateNumber('SUM', 2, 3), 5);
   });
 
-  describe('DIVIDE test case', function () {
-    it('should return 2 when type is DIVIDE and inputs are 10 and 4.7', function () {
-      assert.strictEqual(calculateNumber('DIVIDE', 10, 4.7), 2);
-    });
-
-    it('should return Error when type is DIVIDE and inputs are 10 and 0', function () {
-      assert.strictEqual(calculateNumber('DIVIDE', 10, 0), 'Error');
-    });
-
-    it('should return 5 when type is DIVIDE and inputs are 10 and 2', function () {
-      assert.strictEqual(calculateNumber('DIVIDE', 10, 2), 5);
-    });
+  it("test if 0 and 0 is equal to 0", function() {
+    assert.strictEqual(calculateNumber('SUM', 0, 0), 0);
   });
-});
+
+  it("test if negatif number works", function() {
+    assert.strictEqual(calculateNumber('SUM', -2, -7.8), -10);
+  });
+
+  it("test if negatif and positif number wors", function() {
+    assert.strictEqual(calculateNumber('SUBTRACT', 2.8, -8), 11);
+  });
+
+  it("test if negatif and positif number wors", function() {
+    assert.strictEqual(calculateNumber('SUBTRACT', 8, -2.8), 11);
+  });
+
+  it("test if error is returned when dividing by zero", function() {
+    assert.strictEqual(calculateNumber('DIVIDE', 2, 0), 'Error');
+  });
+
+  it("test divide", function() {
+    assert.strictEqual(calculateNumber('DIVIDE', 10, 4.8), 2);
+  });
+})
