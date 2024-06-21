@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "This project is about unittest in JS",
   "main": "index.js",
-  "type": "commonjs",
   "scripts": {
-    "test": "mocha '*.test.js'"
+    "test": "mocha"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
