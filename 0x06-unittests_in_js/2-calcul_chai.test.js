@@ -1,4 +1,4 @@
-const calculateNumber = require('./2-calcul');
+const calculateNumber = require('./2-calcul_chai');
 //const chai = require('chai');
 let chai;
 let expect;
